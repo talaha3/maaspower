@@ -21,10 +21,9 @@ class XenServer(RegexSwitchDevice):
     ip_address: A[str, desc("IP address of the XenServer hypervisor")]
     username: A[str, desc("Username for the XenServer hypervisor")]
     password: A[str, desc("Password for the XenServer hypervisor")]
-    uuid: A[str, desc("UUID of the VM provisioned by the XenServer hypervisor")]
-    on: A[str, desc("command line string to switch device on")] = f"xe vm-start uuid={uuid}"
-    off: A[str, desc("command line string to switch device off")] = f"xe vm-shutdown uuid={uuid} force=true"
-    query: A[str, desc("command line string to query device state")] = f"xe vm-param-get uuid={uuid} param-name=power-state"
+    on: A[str, desc("command line string to switch device on")]
+    off: A[str, desc("command line string to switch device off")]
+    query: A[str, desc("command line string to query device state")]
     query_on_regex: A[str, desc("match the on status return from query")] = "^running$"
     query_off_regex: A[str, desc("match the off status return from query")] = "^halted$"
 
