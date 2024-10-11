@@ -15,8 +15,8 @@ from .devices.kasa_device import KasaDevice
 from .devices.shell_cmd import CommandLine
 from .devices.smart_thing import SmartThing
 from .devices.web_device import WebDevice
-from .devices.xenserver import XenServer
 from .devices.web_ui import WebGui
+from .devices.xenserver import XenServer
 from .maasconfig import MaasConfig
 from .webhook import run_web_hook
 
