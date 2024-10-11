@@ -18,14 +18,14 @@ class XenServer(RegexSwitchDevice):
     name: A[
         str, desc("Logical device name for VM provisioned by XenServer hypervisor")
     ]
-    hostname: A[str, desc("Hostname of the XenServer hypervisor")]
-    username: A[str, desc("Username for the XenServer hypervisor")]
-    password: A[str, desc("Password for the XenServer hypervisor")]
+    xen_hostname: A[str, desc("Hostname of the XenServer hypervisor")]
+    xen_username: A[str, desc("Username for the XenServer hypervisor")]
+    xen_password: A[str, desc("Password for the XenServer hypervisor")]
     on: A[str, desc("command line string to switch device on")]
     off: A[str, desc("command line string to switch device off")]
     query: A[str, desc("command line string to query device state")]
-    query_on_regex: A[str, desc("match the on status return from query")] = "^running$"
-    query_off_regex: A[str, desc("match the off status return from query")] = "^halted$"
+    query_on_regex: A[str, desc("match the on status return from query")]
+    query_off_regex: A[str, desc("match the off status return from query")]
 
     type: Literal["XenServer"] = "XenServer"
 
@@ -36,15 +36,15 @@ class XenServer(RegexSwitchDevice):
         """
 
         super().__post_init__()
-        self.device = {
-            "username": self.username,
-            "password": self.password,
+        self.xen_device = {
+            "username": self.xen_username,
+            "password": self.xen_password,
         }
     
     def establish_ssh_connection_and_execute_command(self, command: str):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(self.hostname ,**self.device)
+        ssh.connect(self.xen_hostname ,**self.xen_device)
         stdout, stderr = ssh.exec_command(command)
         print(stdout.read().decode(), stderr.read().decode())
         ssh.close()
