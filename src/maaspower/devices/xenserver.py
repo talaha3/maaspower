@@ -18,7 +18,7 @@ class XenServer(RegexSwitchDevice):
     name: A[
         str, desc("Logical device name for VM provisioned by XenServer hypervisor")
     ]
-    ip_address: A[str, desc("IP address of the XenServer hypervisor")]
+    hostname: A[str, desc("Hostname of the XenServer hypervisor")]
     username: A[str, desc("Username for the XenServer hypervisor")]
     password: A[str, desc("Password for the XenServer hypervisor")]
     on: A[str, desc("command line string to switch device on")]
@@ -44,7 +44,7 @@ class XenServer(RegexSwitchDevice):
     def establish_ssh_connection_and_execute_command(self, command: str):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(self.ip_address ,**self.device)
+        ssh.connect(self.hostname ,**self.device)
         stdout, stderr = ssh.exec_command(command)
         print(stdout.read().decode(), stderr.read().decode())
         ssh.close()
